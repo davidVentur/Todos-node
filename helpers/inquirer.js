@@ -9,31 +9,31 @@ const menuOpts = [
         choices: [
             {
                 value: '1',
-                name: '1. Crear tarea'
+                name: `${'1'.green}. Crear tarea`
             },
             {
                 value: '2',
-                name: '2. Listar tareas'
+                name: `${'2'.green}. Listar tareas`
             },
             {
                 value: '3',
-                name: '3. Listar tareas comletadas'
+                name: `${'3'.green}. Listar tareas comletadas`
             },
             {
                 value: '4',
-                name: '4. Listar tareas pendientes'
+                name: `${'4'.green}. Listar tareas pendientes`
             },
             {
                 value: '5',
-                name: '5. Completar tarea(s)'
+                name: `${'5'.green}. Completar tarea(s)`
             },
             {
                 value: '6',
-                name: '6. Borrar tarea'
+                name: `${'6'.green}. Borrar tarea`
             },
             {
                 value: '0',
-                name: '0. Salir'
+                name: `${'0'.green}. Salir`
             },
         ]
     }
@@ -41,9 +41,9 @@ const menuOpts = [
 
 const inquirerMenu = async () => {
     console.clear();
-    console.log('===================='.green);
-    console.log('Seleccione una opcion'.green);
-    console.log('====================\n'.green);
+    console.log('========================='.green);
+    console.log('Seleccione una opcion'.white);
+    console.log('=========================\n'.green);
 
     const { opcion } = await inquirer.prompt(menuOpts);
     return opcion
@@ -61,4 +61,22 @@ const pausa = async () => {
     await inquirer.prompt(question)
 }
 
-export { inquirerMenu, pausa }
+const leerInput = async (message) => {
+    const question = [
+        {
+            type: 'input',
+            name: 'desc',
+            message,
+            validate(value) {
+                if (value.length === 0) {
+                    return 'Por favor ingrese un valor'
+                }
+                return true
+            }
+        }
+    ]
+    const { desc } = await inquirer.prompt(question);
+    return desc
+}
+
+export { inquirerMenu, pausa, leerInput }
